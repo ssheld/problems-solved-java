@@ -16,15 +16,15 @@ public class FindParity {
         Scanner scan = new Scanner(System.in);
         System.out.println("Please enter a large integer to find the parity of.");
         num = scan.nextLong();
-        numParity = BruteForceParity(num);
+        numParity = bruteForceParity(num);
         System.out.printf("Using brute-force the parity of %d is %d%n", num, numParity);
 
-        numParity = EraseBitParity(num);
+        numParity = eraseBitParity(num);
 
         System.out.println("By erasing the lowest bit and dropping runtime to O(k) where k is the number of bits set to 1.");
         System.out.println("Our result is " + numParity);
 
-        numParity = XorParity(num);
+        numParity = xorParity(num);
 
         System.out.println("By taking advantage of associative property of XOR we can get a runtime of O(logn) where n is the size of the word");
         System.out.println("And our result is " + numParity);
@@ -34,7 +34,7 @@ public class FindParity {
     // number of 1's seen thus far. Only need to check for odd or even hence
     // the XOR operator.
     // Time Complexity: O(n) where n is the size of the word.
-    private static short BruteForceParity(long x) {
+    private static short bruteForceParity(long x) {
         short numParity = 0;
         while (x != 0) {
             numParity ^= (x & 1);
@@ -45,7 +45,7 @@ public class FindParity {
 
     // This method of checking parity erases the lowest bit in a word
     // in a single operation.
-    private static short EraseBitParity(long x) {
+    private static short eraseBitParity(long x) {
         short numParity = 0;
         while (x != 0) {
             numParity ^= 1;
@@ -56,13 +56,24 @@ public class FindParity {
 
     // Exploits properties of of XOR to process multiple bits at a time.
     // O(logn) time complexity where n is size of the word.
-    private static short XorParity(long x) {
+    private static short xorParity(long x) {
         x ^= x >>> 32;
+        System.out.println("x is " + x);
         x ^= x >>> 16;
+        System.out.println("x is " + x);
+
         x ^= x >>> 8;
+        System.out.println("x is " + x);
+
         x ^= x >>> 4;
+        System.out.println("x is " + x);
+
         x ^= x >>> 2;
+        System.out.println("x is " + x);
+
         x ^= x >>> 1;
+        System.out.println("x is " + x);
+
         return (short) (x & 0x1);
     }
 }
