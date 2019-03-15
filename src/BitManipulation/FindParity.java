@@ -58,22 +58,11 @@ public class FindParity {
     // O(logn) time complexity where n is size of the word.
     private static short xorParity(long x) {
         x ^= x >>> 32;
-        System.out.println("x is " + x);
         x ^= x >>> 16;
-        System.out.println("x is " + x);
-
         x ^= x >>> 8;
-        System.out.println("x is " + x);
-
         x ^= x >>> 4;
-        System.out.println("x is " + x);
-
         x ^= x >>> 2;
-        System.out.println("x is " + x);
-
         x ^= x >>> 1;
-        System.out.println("x is " + x);
-
         return (short) (x & 0x1);
     }
 }
