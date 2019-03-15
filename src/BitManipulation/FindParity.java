@@ -23,6 +23,11 @@ public class FindParity {
 
         System.out.println("By erasing the lowest bit and dropping runtime to O(k) where k is the number of bits set to 1.");
         System.out.println("Our result is " + numParity);
+
+        numParity = XorParity(num);
+
+        System.out.println("By taking advantage of associative property of XOR we can get a runtime of O(logn) where n is the size of the word");
+        System.out.println("And our result is " + numParity);
     }
 
     // Brute-force test value of each bit iteratively keeping track of the
@@ -42,11 +47,22 @@ public class FindParity {
     // in a single operation.
     private static short EraseBitParity(long x) {
         short numParity = 0;
-
         while (x != 0) {
             numParity ^= 1;
-            x &= (x-1); // Drops the lowest set bit of x
+            x &= (x - 1); // Drops the lowest set bit of x
         }
         return numParity;
+    }
+
+    // Exploits properties of of XOR to process multiple bits at a time.
+    // O(logn) time complexity where n is size of the word.
+    private static short XorParity(long x) {
+        x ^= x >>> 32;
+        x ^= x >>> 16;
+        x ^= x >>> 8;
+        x ^= x >>> 4;
+        x ^= x >>> 2;
+        x ^= x >>> 1;
+        return (short) (x & 0x1);
     }
 }
